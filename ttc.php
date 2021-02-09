@@ -1,4 +1,9 @@
 <?php
+function calcTTC($montantHT, $taux)
+{
+    return round($montantHT * (1 + ($taux / 100)), 1);
+}
+
 // Récupération des données
 $montantHT = $_GET["prix"] ?? 0;
 
@@ -10,7 +15,7 @@ if ($montantHT > 0) {
     }
 
     // Calcul du montant TTC
-    $montantTTC = round($montantHT * 1.2, 1);
+    $montantTTC = calcTTC($montantHT, 20);
 } else {
     $erreur = "Vous devez saisir un montant numérique et positif";
 }
