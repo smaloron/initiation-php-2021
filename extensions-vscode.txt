@@ -3,4 +3,3 @@ Auto close tag
 Auto rename tag
 Surround
 Bracket pair coloriser
-PHP tools for VS Code
