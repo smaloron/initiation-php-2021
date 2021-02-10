@@ -16,6 +16,8 @@ $name = $_GET["nom"] ?? "Jane";
     <title>Hello</title>
 </head>
 <body>
+    <?php include "fragments/nav.html"?>
+
     <h1>Hello <?=$name?> <?php echo $name ?> </h1>
     <h2>Nous sommes le <?php echo $now; ?></h2>
     <?php echo 2 ** 3 ?>
