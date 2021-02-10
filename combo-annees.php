@@ -1,3 +1,15 @@
+<?php
+function getNextYearsList($numberOfYears)
+{
+    $startDate = date("Y");
+    $html = "<select>";
+    for ($i = 0; $i < $numberOfYears; $i++) {
+        $html .= "<option>" . ($startDate + $i) . "</option>";
+    }
+    $html .= "</select>";
+    return $html;
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -11,14 +23,9 @@
 <body>
 
 <?php
-$startDate = date("Y");
-$numberOfYears = 12;
+echo getNextYearsList(15);
 ?>
-    <select>
-        <?php for ($i = 0; $i <= $numberOfYears; $i++): ?>
-            <option> <?=$startDate + $i?> </option>
-        <?php endfor?>
-    </select>
+
 
 </body>
 
