@@ -4,7 +4,7 @@ function getCell($rowIndex, $colIndex)
 {
     $isRowEven = ($rowIndex % 2 == 0);
     $isColEven = ($colIndex % 2 == 0);
-    $className = $isRowEven == $isColEven ? "white-cell" : "black-cell";
+    $className = $isRowEven == $isColEven ? "black-cell" : "white-cell";
 
     return "<td class='$className'></td>";
 }
