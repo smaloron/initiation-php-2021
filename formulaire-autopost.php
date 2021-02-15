@@ -1,5 +1,5 @@
 <?php
-
+var_dump($_POST);
 // Le formulaire a-t-il été posté ?
 $hasPostedData = count($_POST) > 0;
 // Tableau de toutes les erreurs de saisie
@@ -42,7 +42,7 @@ if ($hasPostedData) {
 }
 
 // booléen qui indique si il y a des erreurs
-$hasError = count($errors) > 0;
+$hasError = !empty($errors); //count($errors) > 0;
 
 ?>
 
@@ -86,7 +86,22 @@ $hasError = count($errors) > 0;
                         value="<?=$salary ?? ""?>">
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-block mt-3"> Envoyer </button>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" name="date" class="form-control"
+                        value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>type</label>
+                        <select name="type" class="form-control">
+                            <option value="credit">crédit</option>
+                            <option value="debit">débit</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block mt-3" name="submit" value="credit"> Envoyer </button>
+                    <button type="submit" class="btn btn-primary btn-block mt-3" name="submit" value="debit"> Envoyer </button>
                 </form>
             <?php endif?>
         </div>

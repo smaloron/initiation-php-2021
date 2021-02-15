@@ -11,6 +11,54 @@ $accountMoves = [
 $totalCredit = 0;
 $totalDebit = 0;
 
+// Traitement du formulaire
+
+// Les données ont-elles été postées
+// alernative count($_POST) > 0
+$isPosted = filter_has_var(INPUT_POST, "amount");
+$errors = [];
+
+// Si les données ont été postées on les récupère
+if ($isPosted) {
+    // Récupération des données
+    $label = filter_input(INPUT_POST, "label", FILTER_SANITIZE_STRING);
+    $date = filter_input(INPUT_POST, "date", FILTER_SANITIZE_STRING);
+    $amount = filter_input(INPUT_POST, "amount", FILTER_SANITIZE_NUMBER_INT);
+    $type = filter_input(INPUT_POST, "type", FILTER_SANITIZE_STRING);
+
+    // Validation
+
+    if (empty($label)) {
+        array_push($errors, "Le libélllé ne peut être vide");
+    }
+
+    if (empty($amount) || $amount < 1) {
+        array_push($errors, "Le montant ne peut être vide et doit êre supérieur à zéro");
+    }
+
+    $testedDate = new DateTime($date);
+    $now = new DateTime();
+    if ($testedDate > $now) {
+        array_push($errors, "La date ne peut être définie dans l'avenir");
+    }
+
+    // Si les données sont valides alors
+    // on ajoute une entrée au tableau des movements
+    $hasErrors = count($errors) > 0;
+    if (!$hasErrors) {
+        // Création d'un mouvement sur le compte
+        $newData = [
+            "label" => $label,
+            "date" => $date,
+            "amount" => $amount,
+            "type" => $type,
+        ];
+        // Ajout de cette nouvelle ligne au tableau
+        array_push($accountMoves, $newData);
+    }
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +70,46 @@ $totalDebit = 0;
     <title>Comptes</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
-<body>
+<body class="container-fluid">
+
+<div class="mt-3 mb-3 row justify-content-center">
+    <div class="col-md-4">
+
+        <!-- Affichage des messages d'erreur -->
+        <?php if ($isPosted && $hasErrors): ?>
+            <div class="alert alert-danger">
+                <?php foreach ($errors as $item): ?>
+                    <p> <?=$item?> </p>
+                <?php endforeach?>
+            </div>
+        <?php endif?>
+
+        <form method="post">
+        <div class="form-group">
+            <label>Libéllé</label>
+            <input type="text" name="label" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Date</label>
+            <input type="date" name="date" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Montant</label>
+            <input type="number" name="amount" class="form-control">
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" name="type" value="credit" class="form-check-input">
+            <label class="form-check-label">Crédit</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" name="type" value="debit" class="form-check-input">
+            <label class="form-check-label">Débit</label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mt-2">
+            Valider
+        </button>
+    </form></div>
+</div>
 
 <table class="table table-bordered table-striped">
 
