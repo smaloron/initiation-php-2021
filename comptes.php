@@ -1,12 +1,42 @@
 <?php
 
+/*
 $accountMoves = [
-    ["label" => "Salaire", "date" => "2021-01-01", "amount" => 2500, "type" => "credit"],
-    ["label" => "Loyer", "date" => "2021-01-05", "amount" => 800, "type" => "debit"],
-    ["label" => "Restau", "date" => "2021-01-08", "amount" => 30, "type" => "debit"],
-    ["label" => "Essence", "date" => "2021-01-09", "amount" => 50, "type" => "debit"],
-    ["label" => "ebay", "date" => "2021-01-05", "amount" => 120, "type" => "credit"],
-];
+["label" => "Salaire", "date" => "2021-01-01", "amount" => 2500, "type" => "credit"],
+["label" => "Loyer", "date" => "2021-01-05", "amount" => 800, "type" => "debit"],
+["label" => "Restau", "date" => "2021-01-08", "amount" => 30, "type" => "debit"],
+["label" => "Essence", "date" => "2021-01-09", "amount" => 50, "type" => "debit"],
+["label" => "ebay", "date" => "2021-01-05", "amount" => 120, "type" => "credit"],
+];*/
+
+// Définition du chemin vers le fichier
+define("DATA_PATH", "data/account.json");
+
+// Lecture des données
+function getData()
+{
+    $accountMoves = [];
+    // Si le fichier existe on le lit
+    if (file_exists(DATA_PATH)) {
+        // Lecture du fichier json
+        $data = file_get_contents(DATA_PATH);
+        // conversion du json en tableau (déssérialisation)
+        $accountMoves = json_decode($data, true) ?? [];
+    }
+    return $accountMoves;
+}
+
+// sauvegarde des données
+function saveData($data)
+{
+    // conversion de $data en chaîne de caractère (sérialisation)
+    $json = json_encode($data);
+    // Enregistrement dans le fichier
+    file_put_contents(DATA_PATH, $json);
+}
+
+// Appel de la fonction de lectures
+$accountMoves = getData();
 
 $totalCredit = 0;
 $totalDebit = 0;
@@ -55,6 +85,9 @@ if ($isPosted) {
         ];
         // Ajout de cette nouvelle ligne au tableau
         array_push($accountMoves, $newData);
+
+        //Sauvegarde dans le fichier
+        saveData($accountMoves);
     }
 
 }
