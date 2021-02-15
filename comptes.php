@@ -139,8 +139,10 @@ $totalDebit += $item["type"] == "debit" ? $item["amount"] : 0;
         <td><?=$totalDebit?></td>
     </tr>
     <tr>
-        <td colspan="3">Solde</td>
-        <td><?=$totalCredit - $totalDebit?></td>
+        <?php $solde = $totalCredit - $totalDebit;?>
+        <td colspan="2">Solde</td>
+        <td><?=$totalCredit > $totalDebit ? $solde : ""?></td>
+        <td><?=$totalCredit <= $totalDebit ? $solde : ""?></td>
     </tr>
 <tfoot>
 
