@@ -22,6 +22,13 @@ $isPosted = filter_has_var(INPUT_POST, "title");
 // Le lien supprimer a-t-il été cliqué
 $deleteLinkClicked = filter_has_var(INPUT_GET, "toDelete");
 
+var_dump($_POST);
+var_dump($_GET);
+
+var_dump($isPosted);
+
+var_dump($deleteLinkClicked);
+
 if ($isPosted) {
     // Récupération de la saisie
     $title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_STRING);
