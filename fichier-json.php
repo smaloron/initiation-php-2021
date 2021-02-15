@@ -1,5 +1,15 @@
 <?php
 
+function saveBook($bookList, $filePath)
+{
+    // Sauvegarde de la liste des livres dans un fichier
+    // Conversion du tableau en chaîne de caractère
+    $jsonBooks = json_encode($bookList);
+    // Enregistrement de la chaîne de caractère dans un fichier
+    file_put_contents($filePath, $jsonBooks);
+
+}
+
 // Lecture des données du fichier json
 $filePath = "data/livres.json";
 // $jsonContent est une chaîne de caractère
@@ -9,6 +19,8 @@ $bookList = json_decode($jsonContent, true);
 
 // traitement du formulaire
 $isPosted = filter_has_var(INPUT_POST, "title");
+// Le lien supprimer a-t-il été cliqué
+$deleteLinkClicked = filter_has_var(INPUT_GET, "toDelete");
 
 if ($isPosted) {
     // Récupération de la saisie
@@ -18,13 +30,14 @@ if ($isPosted) {
     // Ajout à $bookList seulement si la saisie n'est pas vide
     if (!empty($title) && !empty($author)) {
         array_push($bookList, ["title" => $title, "author" => $author]);
-        // Sauvegarde de la liste des livres dans un fichier
-        // Conversion du tableau en chaîne de caractère
-        $jsonBooks = json_encode($bookList);
-        // Enregistrement de la chaîne de caractère dans un fichier
-        file_put_contents($filePath, $jsonBooks);
+        saveBook($bookList, $filePath);
     }
-
+} else if ($deleteLinkClicked) {
+    // Récupération de l'index à supprimer
+    $index = filter_input(INPUT_GET, "toDelete", FILTER_SANITIZE_NUMBER_INT);
+    // Suppression dans $bookList
+    array_splice($bookList, $index, 1);
+    saveBook($bookList, $filePath);
 }
 
 ?>
@@ -48,8 +61,16 @@ if ($isPosted) {
     <div>
 
     <ul>
-        <?php foreach ($bookList as $book): ?>
-            <li> <?=$book["title"]?> - <?=$book["author"]?> </li>
+        <?php
+$index = 0;
+foreach ($bookList as $book):
+?>
+            <li>
+                <?=$book["title"]?> - <?=$book["author"]?>
+                <a href="fichier-json.php?toDelete=<?=$index?>">supprimer </a>
+            </li>
+            <?php $index++;?>
+
         <?php endforeach?>
     </ul>
 
