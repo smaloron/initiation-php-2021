@@ -1,7 +1,1 @@
-[
-    {
-        "username": "Joe User",
-        "login": "juser",
-        "password": ""
-    }
-]
+[{"username":"Bob","login":"bob","password":"123"},{"username":"Bob","login":"bob","password":"123"},{"username":"Alan Turing","login":"turing","password":"$2y$10$9PiCyI5I3vIxhdg13gZike85GUcjAji3c3UF\/dQuWGvnfvTBv\/eay"},{"username":"Ada Lovelace","login":"ada","password":"$2y$10$1oG2Wl1DkHrES\/XLw56DOu5KWp.RO6ibfDQh31N4spGNY39\/wHv7."},{"username":"Ada Lovelace","login":"ada","password":"$2y$10$RKozH0FimDAnhwpcStmenedM7FaYnetQe3ZlrwVP.Wi4H7s\/X5DAe"}]

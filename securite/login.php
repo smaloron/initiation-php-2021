@@ -3,25 +3,20 @@
 // importation des fonctions de sécurité
 require "fonctions-securite.php";
 
-$isPosted = filter_has_var(INPUT_POST, "userName");
+$isPosted = filter_has_var(INPUT_POST, "userLogin");
 
 if ($isPosted) {
-    $userName = filter_input(INPUT_POST, "userName", FILTER_SANITIZE_STRING);
     $userLogin = filter_input(INPUT_POST, "userLogin", FILTER_SANITIZE_STRING);
     $userPassword = filter_input(INPUT_POST, "userPassword", FILTER_SANITIZE_STRING);
 
     $user = [
-        "username" => $userName,
         "login" => $userLogin,
         "password" => $userPassword,
     ];
 
-    // Sauvegarde du nouvel utilisateur
-    if (saveUser($user)) {
-        // redirection vers le login
-        header("location:/securite/login.php");
+    if (authenticateUser($user)) {
+        header("location:/securite/secret.php");
     }
-
 }
 
 ?>
@@ -38,12 +33,8 @@ if ($isPosted) {
 <body class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-4">
-            <h1>Inscription</h1>
+            <h1>Connexion</h1>
             <form method="post">
-                <div class="form-group">
-                    <label>Nom de l'utilisateur</label>
-                    <input type="text" name="userName" class="form-control">
-                </div>
                 <div class="form-group">
                     <label>Identifiant de l'utilisateur</label>
                     <input type="text" name="userLogin" class="form-control">
