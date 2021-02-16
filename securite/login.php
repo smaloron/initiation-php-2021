@@ -33,6 +33,13 @@ if ($isPosted) {
 <body class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-4">
+            <?php if (isset($_SESSION["message"])): ?>
+                <div class="alert alert-primary">
+                    <?=$_SESSION["message"]?>
+                </div>
+                <?php unset($_SESSION["message"])?>
+            <?php endif?>
+
             <h1>Connexion</h1>
             <form method="post">
                 <div class="form-group">

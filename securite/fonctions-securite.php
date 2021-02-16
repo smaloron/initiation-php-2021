@@ -63,3 +63,8 @@ function authenticateUser($credentials)
 
     return $authenticated;
 }
+
+function isAuthenticated()
+{
+    return isset($_SESSION["user"]);
+}

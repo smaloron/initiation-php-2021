@@ -2,6 +2,13 @@
 
 require "fonctions-securite.php";
 
+// Sécurisation de la page
+// Il faut être authentifier pour avoir accès
+if (!isAuthenticated()) {
+    $_SESSION["message"] = "Vous devez être authentifié pour voir la page secret";
+    header("location:login.php");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
